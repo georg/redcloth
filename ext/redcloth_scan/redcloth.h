@@ -43,7 +43,7 @@ VALUE red_parse_title(VALUE, VALUE, VALUE);
 VALUE redcloth_transform(VALUE, char *, char *, VALUE);
 VALUE redcloth_transform2(VALUE, VALUE);
 void red_inc(VALUE, VALUE);
-VALUE red_block(VALUE, VALUE, VALUE, VALUE);
+VALUE red_block(VALUE, VALUE *, VALUE, VALUE);
 VALUE red_blockcode(VALUE, VALUE, VALUE);
 VALUE red_pass(VALUE, VALUE, VALUE, ID, VALUE);
 VALUE red_pass_code(VALUE, VALUE, VALUE, ID);
@@ -67,11 +67,11 @@ VALUE red_pass_code(VALUE, VALUE, VALUE, ID);
 #define PARSE_IMAGE_ATTR(A)  red_parse_image_attr(self, regs, ID2SYM(rb_intern(A)))
 #define PASS_CODE(H, A, T) rb_str_append(H, red_pass_code(self, regs, ID2SYM(rb_intern(A)), rb_intern(T)))
 #define ADD_BLOCK() \
-  rb_str_append(html, red_block(self, regs, block, refs)); \
+  rb_str_append(html, red_block(self, &regs, block, refs)); \
   extend = Qnil; \
   CLEAR(block); \
   CLEAR_REGS()
-#define ADD_EXTENDED_BLOCK()    rb_str_append(html, red_block(self, regs, block, refs)); CLEAR(block);
+#define ADD_EXTENDED_BLOCK()    rb_str_append(html, red_block(self, &regs, block, refs)); CLEAR(block);
 #define END_EXTENDED()     extend = Qnil; CLEAR_REGS();
 #define ADD_BLOCKCODE()    rb_str_append(html, red_blockcode(self, regs, block)); CLEAR(block); CLEAR_REGS()
 #define ADD_EXTENDED_BLOCKCODE()    rb_str_append(html, red_blockcode(self, regs, block)); CLEAR(block);

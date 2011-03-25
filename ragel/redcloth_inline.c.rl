@@ -89,8 +89,9 @@ red_pass_code(VALUE self, VALUE regs, VALUE ref, ID meth)
 }
 
 VALUE
-red_block(VALUE self, VALUE regs, VALUE block, VALUE refs)
+red_block(VALUE self, VALUE *pregs, VALUE block, VALUE refs)
 {
+  VALUE regs = *pregs;
   ID method;
   VALUE fallback;
   VALUE sym_text = ID2SYM(rb_intern("text"));
@@ -111,6 +112,7 @@ red_block(VALUE self, VALUE regs, VALUE block, VALUE refs)
       fallback = rb_hash_aref(regs, ID2SYM(rb_intern("fallback")));
       if (!NIL_P(fallback)) {
         rb_str_append(fallback, rb_hash_aref(regs, sym_text));
+        *pregs = rb_hash_new();
         CLEAR_REGS();
         rb_hash_aset(regs, sym_text, fallback);
       }

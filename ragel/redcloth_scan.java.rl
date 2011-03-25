@@ -215,7 +215,7 @@ public class RedclothScanService implements BasicLibraryService {
           IRubyObject fallback = ((RubyHash)regs).aref(runtime.newSymbol("fallback"));
           if(!fallback.isNil()) {
             ((RubyString)fallback).append(((RubyHash)regs).aref(sym_text));
-            regs = RubyHash.newHash(runtime);
+            regs = this.regs = RubyHash.newHash(runtime);
             ((RubyHash)regs).aset(sym_text, fallback);
           }
           block = self.callMethod(runtime.getCurrentContext(), "p", regs);

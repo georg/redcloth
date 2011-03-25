@@ -62,3 +62,10 @@ in: |+
 
 
 html: <h1>Header</h1>
+---
+name: two dots with a blank line
+in: |+
+  foo.. bar
+
+html: <p>foo.. bar</p>
+latex: "foo.. bar\n\n"
